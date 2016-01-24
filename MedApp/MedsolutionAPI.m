@@ -84,11 +84,11 @@
             if ([[array objectAtIndex:i] isEqual:[array lastObject]]){
                 
                 // Отправляем уведомление о том, что данные получены и можно обновлять таблицу.
-                
+                completionBlock(arrayNews);
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"updateTable" object:self];
             }
             
-            completionBlock(arrayNews);
+
         }
 
     }];

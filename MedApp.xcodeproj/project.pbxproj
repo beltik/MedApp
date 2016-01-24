@@ -10,6 +10,7 @@
 		380E4E77F155FF73A2259C68 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D616A225D81791FF1015BBB /* libPods.a */; };
 		71ED1ED61C52C6E700F74439 /* MyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ED1ED51C52C6E700F74439 /* MyCell.m */; };
 		71F0C3951C52CB7E00F87750 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F0C3941C52CB7E00F87750 /* MainViewController.m */; };
+		71F2BE511C552D6400BAAC6E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F2BE501C552D6400BAAC6E /* DetailViewController.m */; };
 		71F6849A1C52866D00229C89 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F684991C52866D00229C89 /* main.m */; };
 		71F6849D1C52866D00229C89 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F6849C1C52866D00229C89 /* AppDelegate.m */; };
 		71F684A31C52866D00229C89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71F684A11C52866D00229C89 /* Main.storyboard */; };
@@ -26,6 +27,8 @@
 		71ED1ED51C52C6E700F74439 /* MyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCell.m; sourceTree = "<group>"; };
 		71F0C3931C52CB7E00F87750 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		71F0C3941C52CB7E00F87750 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		71F2BE4F1C552D6400BAAC6E /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		71F2BE501C552D6400BAAC6E /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		71F684951C52866D00229C89 /* MedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71F684991C52866D00229C89 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		71F6849B1C52866D00229C89 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 			children = (
 				71F0C3931C52CB7E00F87750 /* MainViewController.h */,
 				71F0C3941C52CB7E00F87750 /* MainViewController.m */,
+				71F2BE4F1C552D6400BAAC6E /* DetailViewController.h */,
+				71F2BE501C552D6400BAAC6E /* DetailViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				71F6849D1C52866D00229C89 /* AppDelegate.m in Sources */,
 				71F684B91C52ADEE00229C89 /* MedsolutionAPI.m in Sources */,
 				71F0C3951C52CB7E00F87750 /* MainViewController.m in Sources */,
+				71F2BE511C552D6400BAAC6E /* DetailViewController.m in Sources */,
 				71F684B81C52ADEE00229C89 /* HTTPClient.m in Sources */,
 				71F6849A1C52866D00229C89 /* main.m in Sources */,
 				71F684BC1C52AE7300229C89 /* NewsParseer.m in Sources */,

@@ -12,10 +12,6 @@
 
 @interface HTTPClient : NSObject
 
-- (void) getDataWithParams: (NSDictionary *) params method:(NSString *) method completion: (void (^) (id response)) completion;
-
--(void)postDataWithParams: (NSDictionary*)params method:(NSString*) method completion: (void (^) (id response)) completion;
-
 
 -(void)getNewsWithParameters :(NSDictionary *)parameters completion: (void (^) (id response)) completion;
 

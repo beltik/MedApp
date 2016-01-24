@@ -27,6 +27,7 @@
     [manager.requestSerializer setValue:@"secret_key" forHTTPHeaderField:@"API-KEY"];
     
     [manager GET:@"news" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         NSLog(@"JSON: %@", responseObject);
         
         completion(responseObject);

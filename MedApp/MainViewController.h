@@ -11,5 +11,6 @@
 @interface MainViewController : UITableViewController
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSDictionary *parameters;
 
 @end

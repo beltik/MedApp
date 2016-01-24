@@ -12,12 +12,19 @@
 
 @implementation MyCell
 
+//@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+//@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
+
 
 -(void)prepareForReuse{
     
-    // Для избежания подгрузки неверных изображений, когда таблица пытается загрузить 5,15,25 и тд. ячейки которые уже были использованны.
+    // Для избежания подгрузки неверных изображений, когда таблица пытается загрузить ячейки которые уже были использованны.
     
-      [self.myImageView cancelImageRequestOperation];
+    self.dateLabel = nil;
+    self.titleLabel = nil;
+    [self.myImageView cancelImageRequestOperation];
+    self.myImageView.image = nil;
 }
 
 @end
