@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MainViewController.h
 //  MedApp
 //
 //  Created by Necrosoft on 22/01/16.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface MainViewController : UITableViewController
 
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
-
