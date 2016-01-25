@@ -7,7 +7,19 @@
 //
 
 #import "DetailNewsParseer.h"
+#import <Motis.h>
+
+/* Response mapping. Here we using method of 3rd library Motis */
 
 @implementation DetailNewsParseer
+
++ (NSDictionary*)mts_mapping
+{
+    return @{@"id": mts_key(itemId),
+             @"lead": mts_key(lead),
+             @"source": mts_key(source),
+             @"text":mts_key(text)
+             };
+}
 
 @end

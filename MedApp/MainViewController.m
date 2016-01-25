@@ -19,8 +19,16 @@
 
 @implementation MainViewController{
     
+    /* Short value, holding value of current index */
+
     short currentIndex;
+    
+    /* Variable, that holding data of current page - parameter, that we pass in GET method, to get information of specific page. We can use it to upload new pages by scrolling to bottom of table view */
+
     NSNumber *currentPage;
+    
+    /* Reference to custom cell class */
+    
     MyCell *cell;
 }
 
@@ -29,15 +37,20 @@
     
     [super viewDidLoad];
     
-    // Setting ivars
+    /* Firstly we load news for first page. Lately we increment that value, to upload new pages and more news */
     
     currentPage = @(1);
 
-    // Центр уведомлений. Подписываемся на уведомления чтобы знать, когда нужно обновить табличку.
+    /* Notification center. We subscribe to notifications to reload table view when we got data from web. Without data we have nothing to display */
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNotification:) name:@"updateTable" object:nil];
+    
+    /* Loading news */
     
     [self loadNews];
 }
+
+/* When we have notification we force our table view to reload itself with new data */
 
 -(void)reloadNotification: (NSNotification*) notification{
 
@@ -45,11 +58,9 @@
     [self.tableView reloadData];
 }
 
-
+/* Load news. After we got array object using block, we set our local property dataArray to new array */
 
 -(void)loadNews{
-    
-    //    page=1&limit=5&order_by=created_at&order=desc
     
     [[MedsolutionAPI sharedInstance] getNewsWithParameters:self.parameters :^(NSMutableArray *newsArray) {
        
@@ -61,9 +72,11 @@
 
 #pragma mark - table view delegate
 
-// Метод который вызывается при нажатии на ячейку. Используем его для вызова метода performSegueWithIdentifier и сохранения текущего индекса.
+/*  Method called when user tap on a row. We use currentIndex variable to get information of current row. We use it later in prepareForSegue method, to identify correct object that correspond to that row */
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    /* Saving current index of row */
     
     currentIndex = indexPath.row;
     
@@ -72,7 +85,7 @@
     
 }
 
-// Высота ячейки
+/* Cell height */
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -80,13 +93,12 @@
 }
 
 
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     return 1;
 }
 
-// Метод определяющий количество ячеек (соответствует количеству объектов массива objectsArray
+/* Method that set number of rows in table, using number of object in property - dataArray */
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -95,22 +107,21 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    // Инициализация ячейки
-    
+    /* Initialization of cell */
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-    // Получаем объект по соответствующему индексу
+    /* Get correct object by index */
     
     NewsParseer *news = [self.dataArray objectAtIndex:indexPath.row];
 
-    // Заполняем ячейку
+    /* Fill cell */
     
     cell.titleLabel.text = news.title;
     
     cell.dateLabel.text = news.created_at;
     
-    // Загружаем изображение с помощью метода загрузки изображений библиотеки AFNetworking
+    /* Load image with AFNetworking method setImageWithURL */
     
     [cell.myImageView setImageWithURL:[NSURL URLWithString:news.thumbnailImage]];
     
@@ -118,31 +129,43 @@
     return cell;
 }
 
- // Вызывается когда пользователь скролит вниз, для подгрузки новых ячеек
+ /* Call that method when user scroll to bottom of view, to load more news */
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     NSInteger currentOffset = scrollView.contentOffset.y;
     NSInteger maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     
     if (maximumOffset - currentOffset <= -40) {
-        NSLog(@"reload");
         
-        // Add task
+            /* We use taht simple check to identify, where we we have more pages, or we is on the last page. If result of multiplying current page value and 5 (limit of news per page) more then actual news, we return (if expression of multiply higher then dataArrays.count we have no more pages with news, and there is no reason to continue) */
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
+                if ([currentPage intValue] * 5 > self.dataArray.count)
+                {
+                    NSLog(@"Moar");
+                    return;
+                }
+                
+            });
+        
+        /* We get in one of 3 global queues for create dispatch group. We use groups to increment current page value, and load more news. The reason we use dispatch groups is - if user try to scroll bottom many times, we could not load so much requests at single moment of time, and also we dont want to increment current page value many times */
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             
-            /* Создаем свою группу */
+            /* Creating dispatch group */
             
             dispatch_group_t myGroup = dispatch_group_create();
             
-            /* Реализуем задачи в группе */
+            /* Enter our group */
             
             dispatch_group_enter(myGroup);
             
-            /* Имплементация */
-            
+            /* Implementation. We increment currentPage value to get news from next page */
             
             currentPage = [NSNumber numberWithInt:[currentPage intValue] + 1];
+            
+            /* Load next page news */
             
             [[MedsolutionAPI sharedInstance] getNewsWithParameters:self.parameters :^(NSMutableArray *newsArray) {
                 
@@ -152,10 +175,9 @@
             
             dispatch_group_leave(myGroup);
             
+            /* We waiting until code is executed. Until then, even if user scroll bottom, our block of code will not be executed */
+            
             dispatch_group_wait(myGroup, DISPATCH_TIME_FOREVER);
-            
-            
-            
             
         });
   
@@ -164,25 +186,32 @@
 
 #pragma mark - segue
 
+/* Method, in which we pass values to next controller, using segue identifier, which we set in Storyboard */
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     if ([[segue identifier] isEqualToString:@"detail"])
     {
-        // Получаем корректный объект (согласно индексу) и создаем указатель на детальный контроллер
+        /* Get correct object (using index) */
     
         NewsParseer  *news = [self.dataArray objectAtIndex:currentIndex];
         
-        // Получаем указатель на контроллер деталей
+        /* Get reference to next controller*/
         
         DetailViewController *detail  = [segue destinationViewController];
         
-        // Убираем хтмл тег <br> и заменяем его на \n, что означает переход на новую строку. Передаем значения конкретных переменных и сам объект
-        detail.detailCreatedAtLabel.text = news.created_at;
+        /* Pass variables values */
+        
+        detail.detailUrlString = news.standardImage;
+        detail.detailCreatedAt = news.created_at;
+        detail.detailNewsID = news.itemId;
         
     }
 }
 
 #pragma mark - setters & getters
+
+/* Getter method for dictionary parameters, that we use in parameters of HTTP request */
 
 -(NSDictionary*)parameters{
     

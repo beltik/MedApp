@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		380E4E77F155FF73A2259C68 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D616A225D81791FF1015BBB /* libPods.a */; };
 		71ED1ED61C52C6E700F74439 /* MyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 71ED1ED51C52C6E700F74439 /* MyCell.m */; };
+		71EEF5AA1C55791200D26043 /* DetailNewsParseer.m in Sources */ = {isa = PBXBuildFile; fileRef = 71EEF5A91C55791200D26043 /* DetailNewsParseer.m */; };
 		71F0C3951C52CB7E00F87750 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F0C3941C52CB7E00F87750 /* MainViewController.m */; };
 		71F2BE511C552D6400BAAC6E /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F2BE501C552D6400BAAC6E /* DetailViewController.m */; };
+		71F2C8121C559B1700D6E77B /* UIColor+JPExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F2C8111C559B1700D6E77B /* UIColor+JPExtras.m */; };
 		71F6849A1C52866D00229C89 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F684991C52866D00229C89 /* main.m */; };
 		71F6849D1C52866D00229C89 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F6849C1C52866D00229C89 /* AppDelegate.m */; };
 		71F684A31C52866D00229C89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71F684A11C52866D00229C89 /* Main.storyboard */; };
@@ -25,10 +27,14 @@
 		4D616A225D81791FF1015BBB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		71ED1ED41C52C6E700F74439 /* MyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCell.h; sourceTree = "<group>"; };
 		71ED1ED51C52C6E700F74439 /* MyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCell.m; sourceTree = "<group>"; };
+		71EEF5A81C55791200D26043 /* DetailNewsParseer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNewsParseer.h; sourceTree = "<group>"; };
+		71EEF5A91C55791200D26043 /* DetailNewsParseer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailNewsParseer.m; sourceTree = "<group>"; };
 		71F0C3931C52CB7E00F87750 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		71F0C3941C52CB7E00F87750 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		71F2BE4F1C552D6400BAAC6E /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		71F2BE501C552D6400BAAC6E /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		71F2C8101C559B1700D6E77B /* UIColor+JPExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JPExtras.h"; sourceTree = "<group>"; };
+		71F2C8111C559B1700D6E77B /* UIColor+JPExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+JPExtras.m"; sourceTree = "<group>"; };
 		71F684951C52866D00229C89 /* MedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71F684991C52866D00229C89 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		71F6849B1C52866D00229C89 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -76,6 +82,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		71F2C80F1C559AC100D6E77B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				71F2C8101C559B1700D6E77B /* UIColor+JPExtras.h */,
+				71F2C8111C559B1700D6E77B /* UIColor+JPExtras.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		71F6848C1C52866D00229C89 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +112,7 @@
 		71F684971C52866D00229C89 /* MedApp */ = {
 			isa = PBXGroup;
 			children = (
+				71F2C80F1C559AC100D6E77B /* Categories */,
 				71F684B31C5286A400229C89 /* API */,
 				71F684B21C52869900229C89 /* Controller */,
 				71F684B11C52869700229C89 /* View */,
@@ -132,6 +148,8 @@
 			children = (
 				71F684BA1C52AE7300229C89 /* NewsParseer.h */,
 				71F684BB1C52AE7300229C89 /* NewsParseer.m */,
+				71EEF5A81C55791200D26043 /* DetailNewsParseer.h */,
+				71EEF5A91C55791200D26043 /* DetailNewsParseer.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -294,6 +312,8 @@
 				71F0C3951C52CB7E00F87750 /* MainViewController.m in Sources */,
 				71F2BE511C552D6400BAAC6E /* DetailViewController.m in Sources */,
 				71F684B81C52ADEE00229C89 /* HTTPClient.m in Sources */,
+				71EEF5AA1C55791200D26043 /* DetailNewsParseer.m in Sources */,
+				71F2C8121C559B1700D6E77B /* UIColor+JPExtras.m in Sources */,
 				71F6849A1C52866D00229C89 /* main.m in Sources */,
 				71F684BC1C52AE7300229C89 /* NewsParseer.m in Sources */,
 				71ED1ED61C52C6E700F74439 /* MyCell.m in Sources */,

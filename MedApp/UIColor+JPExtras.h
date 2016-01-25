@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+/* Category for UIColor, for easily set color with RGB values */
+
 @interface UIColor (JPExtras)
 
 + (UIColor *)colorWithR:(CGFloat)red G:(CGFloat)green B:(CGFloat)blue A:(CGFloat)alpha;

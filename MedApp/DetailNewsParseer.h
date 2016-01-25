@@ -10,4 +10,16 @@
 
 @interface DetailNewsParseer : NSObject
 
+/* Class for mapping JSON response of detail news */
+
+
+@property (nonatomic, strong) NSString * itemId;
+@property (nonatomic, strong) NSString * lead;
+@property (nonatomic, strong) NSString * text;
+@property (nonatomic, strong) NSString * source;
+
+
+
+
+
 @end

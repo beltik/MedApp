@@ -10,12 +10,17 @@
 
 @interface MedsolutionAPI : NSObject
 
-// Объект Синглтон, который используется как основная точка доступа для связи с АПИ.
+ /*  Singleton object, responsible for interact with web service API */
 
 + (MedsolutionAPI*)sharedInstance;
 
+ /* Getting news */
+
+-(void)getNewsWithParameters:(NSDictionary *)parameters :(void (^)(NSMutableArray *newsArray)) completionBlock;
+
+/* Get detail of news with specific ID */
 
 
--(void)getNewsWithParameters:(NSDictionary*)parameters :(void (^)(NSMutableArray *newsArray)) completionBlock;
+-(void)getNewsDetailWithID:(NSString *)itemID :(void (^)(NSMutableArray *dataArray)) completionBlock;
 
 @end

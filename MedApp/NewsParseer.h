@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-// Класс для маппинга ответа.
-
-
+/* Class for mapping jSON response */
 
 @interface NewsParseer : NSObject
 

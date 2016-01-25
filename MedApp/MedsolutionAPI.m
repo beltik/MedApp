@@ -9,6 +9,7 @@
 #import "MedsolutionAPI.h"
 #import "HTTPClient.h"
 #import "NewsParseer.h"
+#import "DetailNewsParseer.h"
 #import "AFNetworking.h"
 #import <Motis.h>
 
@@ -23,7 +24,8 @@
 
 @implementation MedsolutionAPI
 
-// Стандартная реализация синглтона, которая гарантирует, что в один момент времени только один thread сможет иметь доступ к объекту для его инициализации. В памяти будет только один уникальный объект класса VkontakteAPI
+
+/* Standard singleton realisation, which guarantee that we can get only one unique instance ofsingleton object. In any moment of time only single thread can have access to object initialization. */
 
 + (MedsolutionAPI*)sharedInstance
 {
@@ -37,66 +39,116 @@
     dispatch_once(&oncePredicate, ^{
         _sharedInstance = [[MedsolutionAPI alloc] init];
     });
+    
     return _sharedInstance;
 }
 
-// Инициализация класса. Мы так же инициализируем класс httpClient, отвечающий за взаимодействие с веб сервисом посредством ХТТП запросов.
+/* Class initialization. We also initialize  instance of HTTPClient class, that responsable for interaction with web services by HTTP requests. */
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        
         httpClient = [[HTTPClient alloc] init];
-        
-       
-        
+
     }
     return self;
 }
+
+/* Get news */
 
 -(void)getNewsWithParameters:(NSDictionary *)parameters :(void (^)(NSMutableArray *))completionBlock{
     
     [httpClient getNewsWithParameters:parameters completion:^(id response) {
         
-        // Путь в JSON
+        /* Getting array by specific path in JSON object */
         
         NSArray * array = [response valueForKey:@"data"];
         
-        
-        // Новый массив для хранения результатов
+        /*  New array for store results */
         
         NSMutableArray *arrayNews = [[NSMutableArray alloc] init];
         
+        /*  Cycle for filling array with instance of class NewsParseer */
+        
         for (int i = 0; i < array.count; i++) {
             
-            // Маппинг ответа
+            /* Response mapping */
             
             NewsParseer *news = [[NewsParseer alloc]init];
             
+            /* Using 3rd library method for mapping object values */
             
             [news mts_setValuesForKeysWithDictionary:[array objectAtIndex:i]];
             
-            // Добавляем массив
+            /* Add object to an array */
             
             [arrayNews addObject:news];
             
+            /* When we finished with filling array, we send notification through notification center and pass array object by block. */
+            
             if ([[array objectAtIndex:i] isEqual:[array lastObject]]){
                 
-                // Отправляем уведомление о том, что данные получены и можно обновлять таблицу.
                 completionBlock(arrayNews);
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"updateTable" object:self];
             }
             
-
         }
 
     }];
 
     
-    
 }
 
+-(void)getNewsDetailWithID:(NSString *)itemID :(void (^)(NSMutableArray *))completionBlock{
+    
+    [httpClient getDetailOfNewsWithID:itemID completion:^(id response) {
+        
+        /* Parsing detail of specific news object */
+        
+        /* New array for storing data */
+        
+        NSMutableArray *arrayNews = [[NSMutableArray alloc] init];
+        
+        /* Array, storing data of detailed news. */
+        
+        NSArray * detailedNews = [response valueForKey:@"data"];
+        
+        /* Mapping response - object, storing details of specific news */
+        
+        DetailNewsParseer *detailNews = [DetailNewsParseer new];
+        
+        [detailNews mts_setValuesForKeysWithDictionary:[detailedNews objectAtIndex:0]];
+        
+        /* Add current object in array */
+       
+        [arrayNews addObject:detailNews];
+        
+        /* Mapping response - arrays, that stored data of spotligh news */
+        
+        NSArray * spotlightDataArray = [response valueForKey:@"spotlight"];
+        
+        /* Cycle for filling array of spotlight news by NewsParseer objects */
+        
+        for (int i=0; i<spotlightDataArray.count; i++) {
+            
+            NewsParseer *spotlightNews = [NewsParseer new];
+            
+            [spotlightNews mts_setValuesForKeysWithDictionary:[spotlightDataArray objectAtIndex:i]];
+            
+            [arrayNews addObject:spotlightNews];
+            
+            if ([[spotlightDataArray objectAtIndex:i] isEqual:[spotlightDataArray lastObject]]){
+                
+                /* When we finished, pass data by block */
+               
+                completionBlock(arrayNews);
+              
+            }
+        }
+
+    }];
+}
 
 
 

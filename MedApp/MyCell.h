@@ -10,6 +10,8 @@
 
 @interface MyCell : UITableViewCell
 
+/* Custom cell class */
+
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;

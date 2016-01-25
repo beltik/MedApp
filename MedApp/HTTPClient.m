@@ -9,22 +9,26 @@
 #import "HTTPClient.h"
 #import "AFNetworking.h"
 
-//Главный урл вк
+/* Main URL */
+
 #define MAIN_URL @"http://medsolutions.uxp.ru/api/v1/"
 
 
 @implementation HTTPClient
 
-// Общий метод для получения данных методом GET
-
+/* Common method for get data using GET method */
 
 -(void)getNewsWithParameters:(NSDictionary *)parameters completion:(void (^)(id))completion{
     
-    // Manager customization
+    /* AFHTTPRequestOperationManager customization */
     
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:MAIN_URL]];
     
+    /* Setting HTTP Header value */
+    
     [manager.requestSerializer setValue:@"secret_key" forHTTPHeaderField:@"API-KEY"];
+    
+    /* Main GET method. In case if we succeed, we get response object, in our case JSON data */
     
     [manager GET:@"news" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -43,24 +47,30 @@
     
 }
 
-// Метод для отправки лайка методом ПОСТ
+/*  Getting news detail by ID */
 
--(void)postDataWithParams: (NSDictionary*)params method:(NSString*) method completion: (void (^) (id response)) completion {
+-(void)getDetailOfNewsWithID: (NSString*)itemID  completion:(void (^)(id))completion{
     
-    AFHTTPRequestOperationManager  *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:MAIN_URL]];
+    /* Customization of AFHTTPRequestOperationManager */
     
-    [manager POST:method parameters:params success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:MAIN_URL]];
+    
+    /* Setting HTTP Header */
+    
+    [manager.requestSerializer setValue:@"secret_key" forHTTPHeaderField:@"API-KEY"];
+    
+    /* Main GET method. We set parameters to nil, using itemID for getting specific news */
+    
+    [manager GET:[NSString stringWithFormat:@"news/%@", itemID] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"likePosted" object:self];
-
-        NSLog(@"Post like success!");
+        NSLog(@"JSON: %@", responseObject);
         
-    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        completion(responseObject);
         
-        NSLog(@"Post like error!");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
         
     }];
-
     
 }
 

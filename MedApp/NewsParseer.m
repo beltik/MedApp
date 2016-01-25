@@ -11,14 +11,8 @@
 
 @implementation NewsParseer
 
-// Маппинг ответа с помощью библиотеки. Здесь задается путь в объекте JSON к искомым значениям.
+/* Response mapping. Here we using method of 3rd library Motis */
 
-//@property (nonatomic, strong) NSString * id;
-//@property (nonatomic, strong) NSString * title;
-//@property (nonatomic, strong) NSString * standardImage;
-//@property (nonatomic, strong) NSString * description;
-//@property (nonatomic, strong) NSString * created_at;
-//@property (nonatomic, strong) NSString * thumbnailImage;
 
 + (NSDictionary*)mts_mapping
 {

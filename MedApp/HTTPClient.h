@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-// Класс ответственный за ХТТП запросы и взаимодействие с сервером
+/* Class responding for sending HTTP requests */
 
 @interface HTTPClient : NSObject
 
+/* Method for getting news */
 
 -(void)getNewsWithParameters :(NSDictionary *)parameters completion: (void (^) (id response)) completion;
+
+/*  Method for getting details */
+
+-(void)getDetailOfNewsWithID: (NSString*)itemID completion : (void (^) (id response)) completion;
 
 @end

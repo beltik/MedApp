@@ -12,17 +12,10 @@
 
 @implementation MyCell
 
-//@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-//@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
-
+/* We call that method to prevent bug, when new cells have old images */
 
 -(void)prepareForReuse{
     
-    // Для избежания подгрузки неверных изображений, когда таблица пытается загрузить ячейки которые уже были использованны.
-    
-    self.dateLabel = nil;
-    self.titleLabel = nil;
     [self.myImageView cancelImageRequestOperation];
     self.myImageView.image = nil;
 }
